@@ -3,9 +3,10 @@ from typing import Callable
 
 import numpy as np
 import matplotlib.pyplot as plt
+from fontTools.misc.bezierTools import epsilon
 from numpy import ndarray
 
-from algorithms import bisection, newton
+from algorithms import bisection, newton, bisection_i, newton_i
 from derivates import polymonial_derivate
 from functions import polymonial, trigonometric, exponential, composite
 
@@ -16,6 +17,17 @@ def prompt() -> int:
         if choice_input.isnumeric():
             c = int(choice_input)
     return c
+
+
+def draw_axis():
+    plt.axhline(0, color="black")
+    plt.axvline(0, color="black")
+
+
+def label_axis():
+    plt.xlabel("x")
+    plt.ylabel("y")
+
 
 if __name__ == '__main__':
     input_range : list = [1, 0]
@@ -29,7 +41,20 @@ if __name__ == '__main__':
     print("4 - wyjście")
 
     choice = prompt()
-
+    
+    plt.grid()
+    plt.axis('equal')
+    label_axis()
+    draw_axis()
+    
+    dupa = np.linspace(-5, 5)
+    plt.plot(dupa, funcs[choice](dupa))
+    plt.ylim(-5,5)
+    plt.xlim(-5, 5)
+    plt.yticks(np.arange(-5, 6, step=1))
+    plt.xticks(np.arange(-5, 6, step=1))
+    plt.show()
+    
     print("[a, b]")
 
     while input_range[0] >= input_range[1]:
@@ -48,23 +73,35 @@ if __name__ == '__main__':
 
     func : Callable[[float | ndarray], float] = funcs[choice]
     func_derivate : Callable[[float | ndarray], float] = funcs_derivates[choice]
+
+    plt.grid()
+    label_axis()
+    draw_axis()
     
-    domain = np.linspace(input_range[0], input_range[1])
-    plt.plot(domain, func(domain))
+    plt.ylim(-4,6)
+    plt.yticks(np.arange(-4, 6, step=1))
+    plt.xticks(np.arange(-5, 5, step=1))
+    
+    plt.plot(dupa, func(dupa), zorder=1)
     
     choice2 = prompt()
 
     match choice2:
         case 0:
-            eps = float(input("Epsilon: "))
-            xb_0 = bisection(input_range, func, eps)
-            xn_0 = newton(input_range, func, func_derivate, eps)
-            plt.scatter(xb_0, func(xb_0))
-            plt.scatter(xn_0, func(xn_0))
-        # case 1:
-            # iterations = input("Iteracje: ")
-            # bisection(input_range, polymonial, iterations)
-            # newton(input_range, polymonial, , iterations)
+            eps = 2
+            while eps > 1 or epsilon <= 0:
+                eps = float(input("Epsilon: "))
+            x_zero_b = bisection(input_range, func, eps)
+            x_zero_n = newton(input_range, func, func_derivate, eps)
+            plt.scatter(x_zero_b, func(x_zero_b), edgecolors="black", linewidth=2, s=100, c="red", zorder=2)
+            plt.scatter(x_zero_n, func(x_zero_n), edgecolors="black", linewidth=2, s=100, c="blue", zorder=2)
+        case 1:
+            iterations = int(input("Iteracje: "))
+            x_zero_b = bisection_i(input_range, polymonial, iterations)
+            x_zero_n = newton_i(input_range, func, func_derivate , iterations)
+            plt.scatter(x_zero_b, func(x_zero_b))
+            plt.scatter(x_zero_n, func(x_zero_n))
+    
     plt.show()
     
 
