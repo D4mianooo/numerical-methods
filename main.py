@@ -4,6 +4,8 @@ from typing import Callable
 import numpy as np
 import matplotlib.pyplot as plt
 from numpy import ndarray
+from tkinter import *
+from tkinter import ttk
 
 from algorithms import bisection, newton, bisection_i, newton_i
 from derivates import polymonial_derivate
@@ -27,8 +29,19 @@ def label_axis():
     plt.xlabel("x")
     plt.ylabel("y")
 
+def draw_gui():
+    root = Tk()
+    frm = ttk.Frame(root, padding=10)
+    frm.grid()
+    ttk.Label(frm, text="Hello World!").grid(column=0, row=0)
+
+    cb = ttk.Combobox(frm)
+    cb['values'] = ("dupa", "dupa2")
+    cb.grid(column=0,row=1)
 
 if __name__ == '__main__':
+    ttk.Button(frm, text="Quit", command=root.destroy).grid(column=1, row=0)
+    root.mainloop()
     input_range : list = [1, 0]
     funcs = [polymonial, trigonometric, exponential, composite]
     funcs_derivates = [polymonial_derivate, trigonometric, exponential, composite]
