@@ -1,4 +1,7 @@
+import tkinter
+from operator import indexOf
 from re import sub
+from tkinter.messagebox import showinfo
 from typing import Callable
 
 import numpy as np
@@ -33,15 +36,32 @@ def draw_gui():
     root = Tk()
     frm = ttk.Frame(root, padding=10)
     frm.grid()
-    ttk.Label(frm, text="Hello World!").grid(column=0, row=0)
 
-    cb = ttk.Combobox(frm)
-    cb['values'] = ("dupa", "dupa2")
-    cb.grid(column=0,row=1)
+    current_var = tkinter.StringVar()
+    cb = ttk.Combobox(frm, textvariable=current_var)
+    cb['values'] = ("f1", "f2", "f3", "f4", "f5", "f6")
+    cb.grid(column=0,row=0)
+
+    def draw():
+        chart = Tk()
+        windows = ttk.Frame(chart)
+
+
+    ttk.Button(frm, text="Narysuj", command=draw).grid(column=1, row=0)
+    ttk.Button(frm, text="Szukaj", command=root.destroy).grid(column=0, row=2)
+    ttk.Label(frm, text="Zakres").grid(column=0, row= 3)
+    ttk.Entry(frm).grid(column = 1, row = 3)
+    ttk.Entry(frm).grid(column = 2, row = 3)
+
+
+
+    cb.bind("<<ComboboxSelected>>", draw)
+
+    root.mainloop()
+
 
 if __name__ == '__main__':
-    ttk.Button(frm, text="Quit", command=root.destroy).grid(column=1, row=0)
-    root.mainloop()
+    draw_gui()
     input_range : list = [1, 0]
     funcs = [polymonial, trigonometric, exponential, composite]
     funcs_derivates = [polymonial_derivate, trigonometric, exponential, composite]
