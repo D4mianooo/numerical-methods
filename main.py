@@ -3,7 +3,6 @@ from typing import Callable
 
 import numpy as np
 import matplotlib.pyplot as plt
-from fontTools.misc.bezierTools import epsilon
 from numpy import ndarray
 
 from algorithms import bisection, newton, bisection_i, newton_i
@@ -44,17 +43,14 @@ if __name__ == '__main__':
     
     plt.grid()
     plt.axis('equal')
+    plt.ylim(-15, 15)
     label_axis()
     draw_axis()
     
     dupa = np.linspace(-5, 5)
     plt.plot(dupa, funcs[choice](dupa))
-    plt.ylim(-5,5)
-    plt.xlim(-5, 5)
-    plt.yticks(np.arange(-5, 6, step=1))
-    plt.xticks(np.arange(-5, 6, step=1))
     plt.show()
-    
+
     print("[a, b]")
 
     while input_range[0] >= input_range[1]:
@@ -78,10 +74,6 @@ if __name__ == '__main__':
     label_axis()
     draw_axis()
     
-    plt.ylim(-4,6)
-    plt.yticks(np.arange(-4, 6, step=1))
-    plt.xticks(np.arange(-5, 5, step=1))
-    
     plt.plot(dupa, func(dupa), zorder=1)
     
     choice2 = prompt()
@@ -89,7 +81,7 @@ if __name__ == '__main__':
     match choice2:
         case 0:
             eps = 2
-            while eps > 1 or epsilon <= 0:
+            while eps > 1 or eps <= 0:
                 eps = float(input("Epsilon: "))
             x_zero_b = bisection(input_range, func, eps)
             x_zero_n = newton(input_range, func, func_derivate, eps)
