@@ -48,7 +48,8 @@ if __name__ == '__main__':
     draw_axis()
     
     dupa = np.linspace(-5, 5)
-    plt.plot(dupa, funcs[choice](dupa))
+    plt.plot(dupa, funcs[choice](dupa), label="dupa")
+    plt.legend()
     plt.show()
 
     print("[a, b]")
@@ -71,9 +72,11 @@ if __name__ == '__main__':
     func_derivate : Callable[[float | ndarray], float] = funcs_derivates[choice]
 
     plt.grid()
+    plt.axis('equal')
+    plt.ylim(-15, 15)
     label_axis()
     draw_axis()
-    
+
     plt.plot(dupa, func(dupa), zorder=1)
     
     choice2 = prompt()
@@ -85,15 +88,14 @@ if __name__ == '__main__':
                 eps = float(input("Epsilon: "))
             x_zero_b = bisection(input_range, func, eps)
             x_zero_n = newton(input_range, func, func_derivate, eps)
-            plt.scatter(x_zero_b, func(x_zero_b), edgecolors="black", linewidth=2, s=100, c="red", zorder=2)
-            plt.scatter(x_zero_n, func(x_zero_n), edgecolors="black", linewidth=2, s=100, c="blue", zorder=2)
+            plt.scatter(x_zero_b, func(x_zero_b), edgecolors="black", linewidth=2, s=100, c="red", alpha=0.5, zorder=2, label="bisekcja")
+            plt.scatter(x_zero_n, func(x_zero_n), edgecolors="black", linewidth=2, s=100, c="blue",alpha=0.5, zorder=2, label="newton")
         case 1:
             iterations = int(input("Iteracje: "))
             x_zero_b = bisection_i(input_range, polymonial, iterations)
             x_zero_n = newton_i(input_range, func, func_derivate , iterations)
             plt.scatter(x_zero_b, func(x_zero_b))
             plt.scatter(x_zero_n, func(x_zero_n))
-    
-    plt.show()
-    
 
+    plt.legend()
+    plt.show()
