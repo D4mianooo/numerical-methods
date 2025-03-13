@@ -1,14 +1,16 @@
 import tkinter
-from operator import indexOf
 from re import sub
 from tkinter.messagebox import showinfo
 from typing import Callable
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.backends._backend_tk import NavigationToolbar2Tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 from numpy import ndarray
-from tkinter import *
 from tkinter import ttk
+from tkinter import *
 
 from algorithms import bisection, newton, bisection_i, newton_i
 from derivates import polymonial_derivate
@@ -34,29 +36,47 @@ def label_axis():
 
 def draw_gui():
     root = Tk()
-    frm = ttk.Frame(root, padding=10)
+    frm = ttk.Frame(root)
     frm.grid()
-
-    current_var = tkinter.StringVar()
-    cb = ttk.Combobox(frm, textvariable=current_var)
-    cb['values'] = ("f1", "f2", "f3", "f4", "f5", "f6")
-    cb.grid(column=0,row=0)
-
+    funcs = [polymonial, trigonometric, exponential, composite]
+    function = [("f1", 1),("f2", 2),("f3", 3),("f4", 4),("f5", 5),("f6", 6)]
+    
+    v = IntVar()
     def draw():
-        chart = Tk()
-        windows = ttk.Frame(chart)
+        window = Tk()
+        
+        domain = np.linspace(-5, 5)
+        fig = Figure(figsize = (6, 5), dpi = 100)
+        ax = fig.add_subplot()
+        ax.grid()
+        ax.set_ylim(-10, 10)
+        ax.margins(0.05)
+        ax.plot(domain, funcs[v.get() - 1](domain), zorder=1)
+        canvas = FigureCanvasTkAgg(fig,master = window)
+        canvas.draw()
+        canvas.get_tk_widget().pack()
+        toolbar = NavigationToolbar2Tk(canvas,
+                                       window)
+        toolbar.update()
+        canvas.get_tk_widget().pack()
 
+    for formula, idx in function:
+        ttk.Radiobutton(root, text=formula, variable=v, value=idx, command=draw).grid(column=1, row=idx, sticky="N")
+        
 
-    ttk.Button(frm, text="Narysuj", command=draw).grid(column=1, row=0)
-    ttk.Button(frm, text="Szukaj", command=root.destroy).grid(column=0, row=2)
-    ttk.Label(frm, text="Zakres").grid(column=0, row= 3)
-    ttk.Entry(frm).grid(column = 1, row = 3)
-    ttk.Entry(frm).grid(column = 2, row = 3)
+    # 
+    # 
+    # 
+    # ttk.Button(frm, text="Narysuj", command=draw).grid(column=6, row=0)
+    # ttk.Button(frm, text="Szukaj", command=root.destroy).grid(column=0, row=2)
+    # ttk.Entry(frm).grid(column = 1, row = 3)
+    # ttk.Entry(frm).grid(column = 2, row = 3)
+    # ttk.Label(frm, text="Zakres").grid(column=0, row= 3)
+    # ttk.Label(frm, text="Zakres").grid(column=0, row= 3)
+    # ttk.Radiobutton(frm, text="Epsilon").grid(column=0, row=4)
+    # ttk.Radiobutton(frm, text="Iteracje").grid(column=1, row=4)
 
-
-
-    cb.bind("<<ComboboxSelected>>", draw)
-
+    # cb.bind("<<ComboboxSelected>>", draw)
     root.mainloop()
 
 
