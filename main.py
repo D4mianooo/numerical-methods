@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from numpy import ndarray
 
 
-from algorithms import bisection, newton, bisection_i, newton_i
+from algorithms import bisection, newton
 from derivates import polymonial_derivate, composite2_derivate, composite3_derivate, exponential_derivate, \
     composite_derivate, trigonometric_derivate
 from functions import polymonial, trigonometric, exponential, composite, composite2, composite3
@@ -98,8 +98,8 @@ if __name__ == '__main__':
                 eps = 2
                 while eps > 1 or eps <= 0:
                     eps = float(input("Epsilon: "))
-                x_zero_b, iterations_b = bisection(input_range, func, eps)
-                x_zero_n, iterations_n = newton(input_range, func, func_derivate, eps)
+                x_zero_b, iterations_b = bisection(input_range, func, eps, True)
+                x_zero_n, iterations_n = newton(input_range, func, func_derivate, eps, True)
                 precision_b = func(x_zero_b)
                 precision_n = func(x_zero_n)
                 
@@ -111,12 +111,12 @@ if __name__ == '__main__':
                 print(f"Miejsce zerowe (Newton): {x_zero_n}, Iteracje: {iterations_n}, Dokładność: {abs(precision_n)}")
             case 1:
                 iterations = int(input("Iteracje: "))
-                x_zero_b = bisection_i(input_range, polymonial, iterations)
-                x_zero_n = newton_i(input_range, func, func_derivate , iterations)
+                x_zero_b, iterations_b = bisection(input_range, func, iterations, False)
+                x_zero_n, iterations_b = newton(input_range, func, func_derivate , iterations, False)
                 precision_b = func(x_zero_b)
                 precision_n = func(x_zero_n)
 
-                plt.scatter(x_zero_b, precision_b, linewidth=2, marker="1", s=100, c="", zorder=1, label="Bisekcja")
+                plt.scatter(x_zero_b, precision_b, linewidth=2, marker="1", s=100, c="red", zorder=1, label="Bisekcja")
                 plt.scatter(x_zero_n, precision_n, linewidth=2, marker="2", s=100, c="blue", zorder=2,label="Stycznych/Newtona")
           
                 print(f"Kryterium: Iterations({iterations})")

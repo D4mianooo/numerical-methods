@@ -1,13 +1,9 @@
 import numpy as np
 
-def horner(x : float | np.ndarray, factors : np.ndarray):
-    y = factors[0]
-    for i in range(1, len(factors)):
-        y = y * x + factors[i]
-    return y
+from horner import horner
 
 def polymonial(x : float | np.ndarray) -> float:
-    return horner(x, factors=[1, -1, -3, 1])
+    return horner(x, [1, -1, -3, 1])
     # return x * (x * (x - 1) - 3) + 1
 
 def trigonometric(x : float | np.ndarray) -> float:

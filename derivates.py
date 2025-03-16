@@ -1,9 +1,12 @@
 import numpy as np
 
 from functions import polymonial, exponential
+from horner import horner
+
 
 def polymonial_derivate(x : float | np.ndarray) -> float:
-    return x * (3 * x - 2) - 3
+    return horner(x, [3, -2, -3])
+    # return x * (3 * x - 2) - 3
 
 def trigonometric_derivate(x : float | np.ndarray) -> float:
     return -np.sin(x - 2)
