@@ -61,8 +61,8 @@ if __name__ == '__main__':
             break
 
         print("Kryterium")
-        print("0 - Dokładność")
-        print("1 - Liczba iteracji")
+        print("0 - Liczba iteracji")
+        print("1 - Dokładność")
     
     
         plt.grid()
@@ -78,37 +78,30 @@ if __name__ == '__main__':
         x_zero_n = 0
         iterations_b = 0
         iterations_n = 0
+        criteria = 0
         
         match choice2:
             case 0:
+                criteria = int(input("Iteracje: "))
+            case 1:
                 eps = 2
                 while eps > 1 or eps <= 0:
                     eps = float(input("Epsilon: "))
-                x_zero_b, iterations_b = bisection(input_range, func, eps, True)
-                x_zero_n, iterations_n = newton(input_range, func, func_derivate, eps, True)
-                precision_b = func(x_zero_b)
-                precision_n = func(x_zero_n)
-                
-                plt.scatter(x_zero_b, precision_b, linewidth=2, marker="1", s=100, c="red", zorder=1, label="Bisekcja")
-                plt.scatter(x_zero_n, precision_n, linewidth=2, marker="2", s=100, c="blue", zorder=2, label="Stycznych/Newtona")
-                
-                print(f"Kryterium: Epsilon({eps})")
-                print(f"Miejsce zerowe (Bisekcja): {x_zero_b}, Iteracje: {iterations_b}, Dokładność: {abs(precision_b)}")
-                print(f"Miejsce zerowe (Newton): {x_zero_n}, Iteracje: {iterations_n}, Dokładność: {abs(precision_n)}")
-            case 1:
-                iterations = int(input("Iteracje: "))
-                x_zero_b, iterations_b = bisection(input_range, func, iterations, False)
-                x_zero_n, iterations_b = newton(input_range, func, func_derivate , iterations, False)
-                precision_b = func(x_zero_b)
-                precision_n = func(x_zero_n)
+                    criteria = eps
+       
+        
+        useEpsilonCriteria = bool(choice2)
+        x_zero_b, iterations_b = bisection(input_range, func, criteria, useEpsilonCriteria)
+        x_zero_n, iterations_n = newton(input_range, func, func_derivate, criteria, useEpsilonCriteria)
+        precision_b = func(x_zero_b)
+        precision_n = func(x_zero_n)
 
-                plt.scatter(x_zero_b, precision_b, linewidth=2, marker="1", s=100, c="red", zorder=1, label="Bisekcja")
-                plt.scatter(x_zero_n, precision_n, linewidth=2, marker="2", s=100, c="blue", zorder=2,label="Stycznych/Newtona")
-          
-                print(f"Kryterium: Iterations({iterations})")
-                print(f"Miejsce zerowe (Bisekcja): {x_zero_b}, Iteracje: {iterations}, Dokładność: {abs(precision_b)}")
-                print(f"Miejsce zerowe (Newton): {x_zero_n}, Iteracje: {iterations}, Dokładność: {abs(precision_n)}")
-            
+        plt.scatter(x_zero_b, precision_b, linewidth=2, marker="1", s=100, c="red", zorder=1, label="Bisekcja")
+        plt.scatter(x_zero_n, precision_n, linewidth=2, marker="2", s=100, c="blue", zorder=2, label="Stycznych/Newtona")
+        
+        print(f"Kryterium: {'Epsilon' if useEpsilonCriteria else 'Iteracje'}({criteria})")
+        print(f"Miejsce zerowe (Bisekcja): {x_zero_b}, Iteracje: {iterations_b}, Dokładność: {abs(precision_b)}")
+        print(f"Miejsce zerowe (Newton): {x_zero_n}, Iteracje: {iterations_n}, Dokładność: {abs(precision_n)}")
         plt.legend()
         plt.show()
     
