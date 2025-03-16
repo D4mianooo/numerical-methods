@@ -9,27 +9,13 @@ from algorithms import bisection, newton
 from derivates import polymonial_derivate, composite2_derivate, composite3_derivate, exponential_derivate, \
     composite_derivate, trigonometric_derivate
 from functions import polymonial, trigonometric, exponential, composite, composite2, composite3
+from utils import prompt, get_values_array, label_axis, draw_axis
 
 funcs = [polymonial, trigonometric, exponential, composite, composite2, composite3]
 funcs_derivates = [polymonial_derivate, trigonometric_derivate, exponential_derivate, composite_derivate, composite2_derivate, composite3_derivate]
-
-def prompt() -> int:
-    c = -1
-    while c < 0:
-        choice_input = input("Wybór: ")
-        if choice_input.isnumeric():
-            c = int(choice_input)
-    return c
+samples = 300
 
 
-def draw_axis():
-    plt.axhline(0, color="black")
-    plt.axvline(0, color="black")
-
-
-def label_axis():
-    plt.xlabel("x")
-    plt.ylabel("y")
 
 if __name__ == '__main__':
     while True:
@@ -51,16 +37,16 @@ if __name__ == '__main__':
         plt.grid()
         plt.axis('equal')
         plt.ylim(-15, 15)
-        plt.ylim(-10, 10)
         label_axis()
         draw_axis()
-        
-        domain = np.linspace(-5, 5)
-        plt.plot(domain, funcs[choice](domain))
-        plt.show()
-    
+ 
         func : Callable[[float | ndarray], float] = funcs[choice]
         func_derivate : Callable[[float | ndarray], float] = funcs_derivates[choice]
+        
+        domain = np.linspace(-10, 10, samples)
+        plt.plot(domain, get_values_array(domain, func))
+        plt.show()
+    
     
         print("[a, b]")
     
@@ -84,8 +70,8 @@ if __name__ == '__main__':
         label_axis()
         draw_axis()
         
-        domain = np.linspace(input_range[0], input_range[1])
-        plt.plot(domain, func(domain), zorder=1)
+        domain = np.linspace(input_range[0], input_range[1], samples)
+        plt.plot(domain, get_values_array(domain, func))
         
         choice2 = prompt()
         x_zero_b = 0
