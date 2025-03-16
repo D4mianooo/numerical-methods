@@ -16,7 +16,7 @@ funcs_derivates = [polymonial_derivate, trigonometric_derivate, exponential_deri
 def prompt() -> int:
     c = -1
     while c < 0:
-        choice_input = input()
+        choice_input = input("Wybór: ")
         if choice_input.isnumeric():
             c = int(choice_input)
     return c
@@ -51,6 +51,7 @@ if __name__ == '__main__':
         plt.grid()
         plt.axis('equal')
         plt.ylim(-15, 15)
+        plt.ylim(-10, 10)
         label_axis()
         draw_axis()
         
@@ -102,8 +103,8 @@ if __name__ == '__main__':
                 precision_b = func(x_zero_b)
                 precision_n = func(x_zero_n)
                 
-                plt.scatter(x_zero_b, precision_b, edgecolors="black", linewidth=1, s=60, c="red", zorder=1, alpha=0.7)
-                plt.scatter(x_zero_n, precision_n, edgecolors="black", linewidth=1, s=60, c="blue", zorder=2, alpha=0.3)
+                plt.scatter(x_zero_b, precision_b, edgecolors="black", linewidth=2, marker="1", s=100, c="red", zorder=1, label="Bisekcja")
+                plt.scatter(x_zero_n, precision_n, edgecolors="black", linewidth=2, marker="2", s=100, c="blue", zorder=2, label="Stycznych/Newtona")
                 
                 print(f"Kryterium: Epsilon({eps})")
                 print(f"Miejsce zerowe (Bisekcja): {x_zero_b}, Iteracje: {iterations_b}, Dokładność: {abs(precision_b)}")
@@ -115,14 +116,14 @@ if __name__ == '__main__':
                 precision_b = func(x_zero_b)
                 precision_n = func(x_zero_n)
 
-                plt.scatter(x_zero_b, precision_b, edgecolors="black", linewidth=1, s=60, c="red", zorder=1, alpha=0.7)
-                plt.scatter(x_zero_n, precision_n, edgecolors="black", linewidth=1, s=60, c="blue", zorder=2, alpha=0.3)
+                plt.scatter(x_zero_b, precision_b, edgecolors="black", linewidth=2, marker="1", s=100, c="", zorder=1, label="Bisekcja")
+                plt.scatter(x_zero_n, precision_n, edgecolors="black", linewidth=2, marker="2", s=100, c="blue", zorder=2,label="Stycznych/Newtona")
           
                 print(f"Kryterium: Iterations({iterations})")
                 print(f"Miejsce zerowe (Bisekcja): {x_zero_b}, Iteracje: {iterations}, Dokładność: {abs(precision_b)}")
                 print(f"Miejsce zerowe (Newton): {x_zero_n}, Iteracje: {iterations}, Dokładność: {abs(precision_n)}")
             
-         
+        plt.legend()
         plt.show()
     
 

@@ -39,6 +39,8 @@ def bisection_i(input_range : list, f , iterations: int) -> float:
 def newton(input_range : list, f : Callable[[float | np.ndarray], float], d : Callable[[float | np.ndarray], float], epsilon: float) -> [float, int]:
     x = input_range[0]
     iterations = 0
+    if f(x) == 0:
+        return x, iterations
     f_val = f(x)    
     while abs(f_val) > epsilon:
         d_val = d(x)
@@ -49,6 +51,8 @@ def newton(input_range : list, f : Callable[[float | np.ndarray], float], d : Ca
 
 def newton_i(input_range : list, f, d, iterations: int) -> float:
     x = input_range[0]
+    if f(x) == 0:
+        return x
     for i in range(iterations):
         x = x - (f(x)/d(x))
     return x
