@@ -103,8 +103,8 @@ if __name__ == '__main__':
                 precision_b = func(x_zero_b)
                 precision_n = func(x_zero_n)
                 
-                plt.scatter(x_zero_b, precision_b, edgecolors="black", linewidth=2, marker="1", s=100, c="red", zorder=1, label="Bisekcja")
-                plt.scatter(x_zero_n, precision_n, edgecolors="black", linewidth=2, marker="2", s=100, c="blue", zorder=2, label="Stycznych/Newtona")
+                plt.scatter(x_zero_b, precision_b, linewidth=2, marker="1", s=100, c="red", zorder=1, label="Bisekcja")
+                plt.scatter(x_zero_n, precision_n, linewidth=2, marker="2", s=100, c="blue", zorder=2, label="Stycznych/Newtona")
                 
                 print(f"Kryterium: Epsilon({eps})")
                 print(f"Miejsce zerowe (Bisekcja): {x_zero_b}, Iteracje: {iterations_b}, Dokładność: {abs(precision_b)}")
@@ -116,8 +116,8 @@ if __name__ == '__main__':
                 precision_b = func(x_zero_b)
                 precision_n = func(x_zero_n)
 
-                plt.scatter(x_zero_b, precision_b, edgecolors="black", linewidth=2, marker="1", s=100, c="", zorder=1, label="Bisekcja")
-                plt.scatter(x_zero_n, precision_n, edgecolors="black", linewidth=2, marker="2", s=100, c="blue", zorder=2,label="Stycznych/Newtona")
+                plt.scatter(x_zero_b, precision_b, linewidth=2, marker="1", s=100, c="", zorder=1, label="Bisekcja")
+                plt.scatter(x_zero_n, precision_n, linewidth=2, marker="2", s=100, c="blue", zorder=2,label="Stycznych/Newtona")
           
                 print(f"Kryterium: Iterations({iterations})")
                 print(f"Miejsce zerowe (Bisekcja): {x_zero_b}, Iteracje: {iterations}, Dokładność: {abs(precision_b)}")
