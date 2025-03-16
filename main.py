@@ -93,7 +93,7 @@ if __name__ == '__main__':
         useEpsilonCriteria = bool(choice2)
         x_zero_b, iterations_b = bisection(input_range, func, criteria, useEpsilonCriteria)
         x_zero_n, iterations_n = newton(input_range, func, func_derivate, criteria, useEpsilonCriteria)
-        precision_b = func(x_zero_b)
+        precision_b = func(x_zero_b) 
         precision_n = func(x_zero_n)
 
         plt.scatter(x_zero_b, precision_b, linewidth=2, marker="1", s=100, c="red", zorder=1, label="Bisekcja")
